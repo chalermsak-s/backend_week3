@@ -52,8 +52,12 @@ app.post('/book/upload', upload.single('file'), async (req: any, res: any) => {
     if (!file) {
       return res.status(400).send('No file uploaded.')
     }
-    const bucket = 'images'
-    const filePath = `books`
+    const bucket = process.env.SUPABASE_BUCKET_NAME
+    const filePath = process.env.UPLOAD_DIR
+
+    if (!bucket || !filePath) {
+      return res.status(500).send('Bucket name or file path not configured.')
+    }
     const ouputUrl = await uploadFile(bucket, filePath, file)
     res.status(200).send(ouputUrl)
   } catch (error) {
