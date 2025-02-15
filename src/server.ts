@@ -1,41 +1,47 @@
-import express, { Request, Response } from "express";
-import { getAllEvents, getEventByCategory, getEventById, addEvent, Event } from "./services/EventService";
+import express, { Request, Response } from 'express'
+import {
+  getAllEvents,
+  getEventByCategory,
+  getEventById,
+  addEvent,
+  Event,
+} from './services/eventService'
 
-import add from "./function";
-const app = express();
-app.use(express.json());
-const port = 3000;
+import add from './function'
+const app = express()
+app.use(express.json())
+const port = 3000
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Welcome to the Events API");
-});
+app.get('/', (req: Request, res: Response) => {
+  res.send('Welcome to the Events API')
+})
 
-app.get("/events", (req, res) => {
+app.get('/events', (req, res) => {
   if (req.query.category) {
-    const category = req.query.category as string;
-    const filteredEvents = getEventByCategory(category);
-    res.json(filteredEvents);
+    const category = req.query.category as string
+    const filteredEvents = getEventByCategory(category)
+    res.json(filteredEvents)
   } else {
-    res.json(getAllEvents());
+    res.json(getAllEvents())
   }
-});
+})
 
-app.get("/events/:id", (req, res) => {
-  const id = parseInt(req.params.id);
-  const event = getEventById(id);
+app.get('/events/:id', (req, res) => {
+  const id = parseInt(req.params.id)
+  const event = getEventById(id)
   if (event) {
-    res.json(event);
+    res.json(event)
   } else {
-    res.status(404).send("Event not found");
+    res.status(404).send('Event not found')
   }
-});
+})
 
-app.post("/events", (req, res) => {
-  const newEvent: Event = req.body;
-  addEvent(newEvent);
-  res.json(newEvent);
-});
+app.post('/events', (req, res) => {
+  const newEvent: Event = req.body
+  addEvent(newEvent)
+  res.json(newEvent)
+})
 
 app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`);
-});
+  console.log(`App listening at http://localhost:${port}`)
+})
