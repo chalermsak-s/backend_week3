@@ -1,5 +1,5 @@
 import { Book } from '../models/book'
-import * as repo from '../repository/bookRepository'
+import * as repo from '../repository/bookRepositoryDb'
 
 export { Book }
 
@@ -15,6 +15,6 @@ export function getBookById(id: number): Promise<Book | undefined> {
   return repo.getBookById(id)
 }
 
-export function addBook(newBook: Book): Promise<Book[]> {
+export function addBook(newBook: Book): Promise<Book> {
   return repo.addBook(newBook)
 }
