@@ -20,7 +20,7 @@ export async function getBookById(id: number): Promise<Book | undefined> {
 export async function addBook(newBook: Book): Promise<Book> {
   const { title, author_name, description, groups } = newBook;
   const [result] = await connection.execute(
-    'INSERT INTO books (title, author_name, description, groups) VALUES (?, ?, ?, ?)',
+    'INSERT INTO books (title, author_name, description, `groups`) VALUES (?, ?, ?, ?)',
     [title, author_name, description, groups]
   );
   newBook.id = (result as any).insertId;
