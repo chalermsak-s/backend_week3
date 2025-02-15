@@ -49,19 +49,19 @@ app.post('/events', async (req, res) => {
   res.json(newEvent);
 });
 
-app.get('/books', (req, res) => {
+app.get('/books', async (req, res) => {
   if (req.query.title) {
     const title = req.query.title as string;
     const filteredBooks = getBookByTitle(title);
     res.json(filteredBooks);
   } else {
-    res.json(getAllBooks());
+    res.json(await getAllBooks());
   }
 });
 
-app.get('/books/:id', (req, res) => {
+app.get('/books/:id', async (req, res) => {
   const id = parseInt(req.params.id);
-  const book = getBookById(id);
+  const book = await getBookById(id);
   if (book) {
     res.json(book);
   } else {
@@ -69,13 +69,13 @@ app.get('/books/:id', (req, res) => {
   }
 });
 
-app.post('/books', (req, res) => {
+app.post('/books', async (req, res) => {
   const newBook: Book = req.body;
-  addBook(newBook);
+ await addBook(newBook);
   res.json(newBook);
 });
 
-app.get('/add', (req, res) => {
+app.get('/add',async (req, res) => {
   const a = parseInt(req.query.a as string);
   const b = parseInt(req.query.b as string);
   const result = add(a, b);
